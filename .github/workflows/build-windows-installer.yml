@@ -1,0 +1,52 @@
+name: Build Windows installer
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Node (for Playwright MCP)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -r requirements.txt
+          pip install pyinstaller
+          python -m playwright install --with-deps
+
+      - name: Compile check
+        run: |
+          python -c "import py_compile; [py_compile.compile(f, doraise=True) for f in ['main.py','core/setup_wizard.py','core/screen_consent.py','actions/github_control.py','actions/security_lab.py','actions/screen_processor.py']]"
+
+      - name: Build exe
+        run: python -m PyInstaller Ultron.spec --noconfirm
+
+      - name: Build Setup.exe (Inno)
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+        with:
+          path: installer/ultron.iss
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ultron_Setup
+          path: dist-installer/Ultron_Setup.exe
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist-installer/Ultron_Setup.exe

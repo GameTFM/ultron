@@ -19,7 +19,7 @@
   </p>
 
   <p>
-    <a href="https://github.com/GameTFM/ultron/releases/latest/download/Ultron_Setup.exe"><img src="https://img.shields.io/badge/Download_Ultron-Windows_Setup.exe-0078D4?style=for-the-badge&logo=windows&logoColor=white" alt="Download Ultron" /></a>
+    <a href="https://github.com/GameTFM/ultron/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/Download_Ultron-Windows_Setup.exe-0078D4?style=for-the-badge&logo=windows&logoColor=white" alt="Download Ultron" /></a>
   </p>
 </div>
 
@@ -87,7 +87,8 @@ python main.py
 
 - Build on Windows: `scripts\build_windows.bat` (needs Python + PyInstaller + Inno Setup 6)
 - Or push tag `v1.0.0` and GitHub Actions builds `Ultron_Setup.exe` automatically.
-- Download: https://github.com/GameTFM/ultron/releases/latest/download/Ultron_Setup.exe
+- Direct download (source .zip, works right now): https://github.com/GameTFM/ultron/archive/refs/heads/main.zip
+- Setup.exe download (works after your first release): https://github.com/GameTFM/ultron/releases/latest/download/Ultron_Setup.exe
 
 ## License
 
